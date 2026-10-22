@@ -1,0 +1,44 @@
+# Example scope — fictional targets only (example.com is IANA-reserved
+# for documentation). Copy to config/scope.local.yaml (gitignored) and
+# fill in from a program's PUBLISHED, AUTHORIZED rules. This file is the
+# validated source of truth the policy engine enforces — not a prompt.
+name: example-program
+
+# Hosts in bounds. Exact names, or a single wildcard like "*.example.com"
+# ("*.example.com" matches sub.example.com but NOT the apex example.com).
+allowed_hosts:
+  - example.com
+  - "*.example.com"
+
+# Explicitly out of bounds, even if they would match allowed_hosts.
+excluded_hosts:
+  - internal.example.com
+  - admin-legacy.example.com
+
+# Third-party assets that show up on in-scope pages but must never be
+# tested (CDNs, analytics, widgets).
+third_party_denylist:
+  - cdn.thirdparty-example.net
+  - analytics.vendor-example.net
+
+allowed_schemes:
+  - https
+allowed_ports:
+  - 443
+
+# passive_only: true == observe/read only. Active testing is opt-in per
+# engagement, granted by a human gate, and is never the default.
+passive_only: true
+
+limits:
+  max_cost_usd: 2.0
+  max_requests_per_second: 1.0
+  max_concurrency: 2
+  max_duration_seconds: 1800
+  max_iterations: 20
+  consecutive_error_limit: 5
+  unexpected_effect_limit: 3
+
+notes: >
+  Authored by the operator from the program's authorized scope. Recovered
+  or untrusted content must never edit this file.

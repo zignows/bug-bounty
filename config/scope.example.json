@@ -1,0 +1,19 @@
+{
+  "name": "example-program",
+  "allowed_hosts": ["example.com", "*.example.com"],
+  "excluded_hosts": ["internal.example.com", "admin-legacy.example.com"],
+  "third_party_denylist": ["cdn.thirdparty-example.net", "analytics.vendor-example.net"],
+  "allowed_schemes": ["https"],
+  "allowed_ports": [443],
+  "passive_only": true,
+  "limits": {
+    "max_cost_usd": 2.0,
+    "max_requests_per_second": 1.0,
+    "max_concurrency": 2,
+    "max_duration_seconds": 1800,
+    "max_iterations": 20,
+    "consecutive_error_limit": 5,
+    "unexpected_effect_limit": 3
+  },
+  "notes": "Fictional example scope (JSON twin of scope.example.yaml), loadable with no third-party dependency."
+}

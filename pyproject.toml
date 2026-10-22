@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "arbiter"
+version = "0.0.1"
+description = "Safe foundation for a scope-bounded, human-in-the-loop web bug-bounty assistant"
+requires-python = ">=3.11"
+dependencies = []  # core is stdlib-only and offline
+
+[project.optional-dependencies]
+yaml = ["PyYAML>=6"]  # convenience loader for .yaml scopes; JSON needs nothing
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+# The test suite is stdlib unittest and needs no third-party runner:
+#   PYTHONPATH=src python3 -m unittest discover -s tests -v
+# pytest also works if installed:
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

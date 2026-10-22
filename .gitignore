@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/
+.env
+.env.*
+# runtime output never belongs in the repo
+/runs/
+/output/
+/evidence/
+# local, operator-provided scope / secrets must never be committed
+/config/scope.local.*
+/config/secrets.*
