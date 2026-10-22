@@ -222,7 +222,12 @@ control plane** (determinístico, sem LLM/rede): audit log append-only,
 budget governor com condições de parada, e o orquestrador que aplica
 decisões (validadas), impõe os limites de rodada, o gate humano de
 validação ativa e registra tudo — demonstrado em
-`examples/simulate_investigation.py`. Sem lógica de execução ativa.
+`examples/simulate_investigation.py`. Primeiro **oráculo** pronto: a
+**matriz de autorização** (`src/arbiter/oracles/authz_matrix.py`) — declara
+intenção de acesso por identidade×recurso, compara com o observado e emite
+violações (DENIED-mas-ALLOWED = IDOR/BOLA; a matriz é a evidência). O
+oráculo de **CVSS** (cálculo determinístico) está em implementação. Sem
+lógica de execução ativa.
 
 ## 12. Decisões abertas (não bloqueiam o desenho)
 
