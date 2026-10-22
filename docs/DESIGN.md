@@ -62,18 +62,27 @@ afrouxar a segurança embaixo.
 
 ## 3. Papéis, provedores e contexto
 
-| Papel | Mão | Provedor (empírico) | Função |
+Harness: **opencode** (não-interativo); provedor: **Amazon Bedrock**.
+Lineup (sem Anthropic; famílias distintas no trio que decide):
+
+| Papel | Mão | Modelo (Bedrock) | Função |
 |---|---|---|---|
-| Orquestrador | fora | Codex | **aconselha** o próximo passo; não transiciona estado |
-| Otimista | fora | configurável | hipótese a partir de observações + conhecimento |
-| Cético | fora | K3/Kimi (Bedrock) | refuta; cita spec; levanta explicações benignas |
-| Árbitro | fora | modelo "forte" | decide por evidência citada |
-| Recon / Validador | na massa | GLM via opencode | executam, atrás do proxy/sandbox |
+| Orquestrador | fora | gpt-oss-20b | **aconselha** o próximo passo; não transiciona estado |
+| Otimista | fora | GLM 5 (Zhipu) | hipótese a partir de observações + conhecimento |
+| Cético | fora | DeepSeek V3.x | refuta; explicações benignas; família ≠ Otimista |
+| Árbitro | fora | Grok 4.7 (xAI) | decide por evidência citada |
+| Validador | na massa | MiniMax M2.5 | executa plano aprovado (gated) |
+| Recon | na massa | gpt-oss-20b | coleta passiva, atrás do proxy/sandbox |
 | Sub-agente efêmero | na massa | barato | absorve trabalho pesado/sujo; devolve destilado; serve de quarentena |
 
-Seleção de modelo é empírica (testar vários, 2× cada). Mapeamento
-inicial: achar leads → GPT/Codex; fechar o loop (validar/reportar) →
-Claude; GLM/Kimi (baratos) exigem prompt mais preciso.
+Seleção é empírica/configurável (IDs exatos fixados do `opencode models`).
+opencode não-interativo **auto-aprova permissões** → o sandbox + egress +
+nftables são a barreira real. Scaffolding offline já pronto:
+`src/arbiter/llm.py` (cliente opencode: roda, extrai o texto do NDJSON,
+parseia JSON, valida contra os schemas de `records.py`, com retry → senão
+`REVISAO_HUMANA`) e `src/arbiter/roles.py` (system prompt dos 6 papéis +
+mapa de modelo + parsers). Testados com subprocess mockado; IDs/credenciais
+entram depois.
 
 ## 4. Fluxo de estados
 
