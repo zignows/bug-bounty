@@ -255,7 +255,14 @@ E, no lugar de "relatório", o **resumo de achado** (`src/arbiter/finding.py`)
 monta **factualmente** o que foi encontrado (classe, endpoint, constatação
 do oráculo, CVSS calculado, evidência, passos observados) para a **triagem
 humana** — **nenhuma IA redige o achado**; severidade é calculada, não
-opinada. Sem lógica de execução ativa.
+opinada. E a **fiação** (`src/arbiter/pipeline.py`) amarra tudo: ingere
+observações, roda os oráculos, grava a constatação de cada um como
+evidência e emite **leads** deduplicados (`src/arbiter/memory.py`) — fatos
+pré-triagem, nunca confirmados/escritos por IA; virar `Finding` scored só
+depois da validação (ativa/gated). Inclui o **oráculo de XSS refletido**
+(`src/arbiter/oracles/reflected.py`), conservador e offline: só marca
+reflexão **não-encodada** de parâmetro com caracteres HTML — **lead**, a
+confirmação exige execução em browser (ativa). Sem lógica de execução ativa.
 
 ## 12. Decisões abertas (não bloqueiam o desenho)
 
