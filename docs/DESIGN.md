@@ -207,9 +207,12 @@ Escala = botão do orçamento, default no chão, dial-up por alvo.
 | 5 | Validação ativa opt-in (oráculos por classe, dry-run, gate humano) | ativo controlado |
 | 6 | Relatório (CVSS calculado, evidência replayável) → `RELATORIO_PRONTO` | — |
 
-**Estado atual:** base da Fase 0–1 iniciada — núcleo determinístico e
-offline (scope, policy engine, state machine) com testes. Sem lógica de
-execução ativa.
+**Estado atual:** base da Fase 0–1 em andamento — núcleo determinístico e
+offline com testes: scope, policy engine, state machine, e o **modelo de
+evidência** (imutável, content-addressed) + **registros de raciocínio**
+(Analysis/ArbiterDecision/ValidationRecord) com os invariantes em código
+(cético precisa de explicação benigna; decisão só com transição legal +
+evidência existente citada). Sem lógica de execução ativa.
 
 ## 12. Decisões abertas (não bloqueiam o desenho)
 
