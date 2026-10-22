@@ -229,8 +229,15 @@ violações (DENIED-mas-ALLOWED = IDOR/BOLA; a matriz é a evidência). O
 oráculo de **CVSS v3.1** (`src/arbiter/oracles/cvss.py`) calcula o base
 score de forma determinística a partir do vetor (constantes, impacto/
 exploitability e o Roundup oficiais), validado contra 8 vetores canônicos
-conhecidos — severidade é **calculada, não opinada**. Sem lógica de
-execução ativa.
+conhecidos — severidade é **calculada, não opinada** (duplamente verificada: a
+implementação e uma derivação independente batem em 18/18 vetores). Há
+ainda o **oráculo de invariante de negócio**
+(`src/arbiter/oracles/business_invariant.py`): detecta, sobre um fluxo
+observado, violações do tipo "regra de servidor imposta no cliente" —
+passo-obrigatório-precedente (payment bypass/step-skip), limites de valor
+(preço/qtd), uso-no-máximo-N (cupom) e estado-tem-que-mudar (crédito/quota).
+A *detecção* é offline; a *confirmação* continua ativa/Fase 5/gated. Sem
+lógica de execução ativa.
 
 ## 12. Decisões abertas (não bloqueiam o desenho)
 
@@ -251,6 +258,9 @@ execução ativa.
   (estado antes/depois) com **conta e saldo de teste do operador**.
   Classe **ativa, Fase 5**, muda estado → **gate humano obrigatório**;
   jamais contra dinheiro real ou terceiros.
+  *(Detecção já implementada offline em
+  `src/arbiter/oracles/business_invariant.py`; a confirmação ativa é que
+  permanece Fase 5/gated.)*
 
 - **SSRF por callback (OOB)** — *proposto, aguardando confirmação.*
   Detecção de SSRF apontando para um endpoint de callback **do próprio
