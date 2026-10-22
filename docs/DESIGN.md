@@ -226,8 +226,11 @@ validação ativa e registra tudo — demonstrado em
 **matriz de autorização** (`src/arbiter/oracles/authz_matrix.py`) — declara
 intenção de acesso por identidade×recurso, compara com o observado e emite
 violações (DENIED-mas-ALLOWED = IDOR/BOLA; a matriz é a evidência). O
-oráculo de **CVSS** (cálculo determinístico) está em implementação. Sem
-lógica de execução ativa.
+oráculo de **CVSS v3.1** (`src/arbiter/oracles/cvss.py`) calcula o base
+score de forma determinística a partir do vetor (constantes, impacto/
+exploitability e o Roundup oficiais), validado contra 8 vetores canônicos
+conhecidos — severidade é **calculada, não opinada**. Sem lógica de
+execução ativa.
 
 ## 12. Decisões abertas (não bloqueiam o desenho)
 
