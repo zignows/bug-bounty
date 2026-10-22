@@ -212,7 +212,12 @@ offline com testes: scope, policy engine, state machine, e o **modelo de
 evidência** (imutável, content-addressed) + **registros de raciocínio**
 (Analysis/ArbiterDecision/ValidationRecord) com os invariantes em código
 (cético precisa de explicação benigna; decisão só com transição legal +
-evidência existente citada). Sem lógica de execução ativa.
+evidência existente citada); e a **camada de conhecimento** (specs como
+asserções citáveis + reports distilados), tratada como **dado não
+confiável**, com gate de curadoria, dedup, proveniência/licença e
+retrieval que devolve conhecimento (não URL). A ingestão em massa do
+corpus `reddelexc/hackerone-reports` é passo posterior, *gated* na decisão
+de licença/dedup (ver `knowledge/README.md`). Sem lógica de execução ativa.
 
 ## 12. Decisões abertas (não bloqueiam o desenho)
 

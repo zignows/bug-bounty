@@ -17,6 +17,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from enum import Enum
 
+from .common import CheckResult
 from .evidence import EvidenceStore
 from .states import State, can_transition
 
@@ -78,12 +79,6 @@ class ValidationRecord:
     actions: tuple[str, ...] = ()
     observations: tuple[str, ...] = ()
     generated_evidence_ids: tuple[str, ...] = ()
-
-
-@dataclass(frozen=True)
-class CheckResult:
-    ok: bool
-    problems: tuple[str, ...] = ()
 
 
 def validate_analysis(a: Analysis) -> CheckResult:
