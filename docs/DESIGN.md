@@ -217,3 +217,22 @@ execução ativa.
 2. Números finais de limites/parada.
 3. Contas/estados de teste que o operador consegue fornecer (destrava IDOR).
 4. Licença/dedup do corpus antes da Fase 2.
+
+## 13. Backlog (candidatos de fase futura)
+
+- **Oráculo de invariante de negócio** — generaliza "regra de servidor
+  imposta no cliente": payment/quota bypass client-side (ex.: débito e
+  ação em requests separados → pular o débito), price tampering,
+  quantidade negativa, reuso de cupom, pular etapa de fluxo multi-step,
+  rate-limit só no front. Declara-se a invariante pretendida (ex.: "ação
+  X exige cobrança bem-sucedida e saldo deve cair") e procura-se a
+  sequência observável que a viola. Confirmação por **diferencial**
+  (estado antes/depois) com **conta e saldo de teste do operador**.
+  Classe **ativa, Fase 5**, muda estado → **gate humano obrigatório**;
+  jamais contra dinheiro real ou terceiros.
+
+- **SSRF por callback (OOB)** — *proposto, aguardando confirmação.*
+  Detecção de SSRF apontando para um endpoint de callback **do próprio
+  operador**; oráculo = "meu callback recebeu a request?". Não encosta em
+  rede interna/metadata, então **não fura o núcleo** de segurança.
+  Pós-exploração interna/metadata e **RCE** permanecem **fora de escopo**.
