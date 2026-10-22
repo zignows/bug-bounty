@@ -242,7 +242,15 @@ Começou também a trilha de **egresso**: o *gate* determinístico
 modo passivo, re-resolução de DNS + bloqueio de IP, **pin do IP resolvido**
 (anti-rebinding) e rate-limit por host — mais os artefatos de deploy
 (`deploy/`: nftables + sandbox) como as outras duas barreiras de defesa em
-profundidade, pra aplicar na VPS. Sem lógica de execução ativa.
+profundidade, pra aplicar na VPS. A camada de coleta/proxy escolhida é o
+**Caido** (com o plugin **JX Scout** para coletar/beautify/de-chunk do JS);
+o egress gate fica como **upstream do Caido**, mantendo o escopo-como-código
+em Python como fonte de verdade — ver `deploy/caido.md`. A **fronteira de
+ingestão** (`src/arbiter/ingest.py`) normaliza qualquer troca HTTP
+(`CapturedExchange`) em evidência `HTTP_EXCHANGE` content-addressed,
+independente da versão/API do Caido (o mapeamento específico do Caido é um
+adapter fino, escrito contra amostra real, por a API dele ser instável
+entre releases). Sem lógica de execução ativa.
 
 ## 12. Decisões abertas (não bloqueiam o desenho)
 
