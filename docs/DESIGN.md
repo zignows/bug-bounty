@@ -205,7 +205,7 @@ Escala = botão do orçamento, default no chão, dial-up por alvo.
 | 3 | Loop de agentes em simulação; máquina de estados + review determinístico | não |
 | 4 | JS-analyze + AST como backbone do Recon passivo; auth assistida | passivo |
 | 5 | Validação ativa opt-in (oráculos por classe, dry-run, gate humano) | ativo controlado |
-| 6 | Relatório (CVSS calculado, evidência replayável) → `RELATORIO_PRONTO` | — |
+| 6 | **Resumo de achado factual** (CVSS calculado, evidência, passos) p/ triagem humana — **sem redação por IA** → `RELATORIO_PRONTO` | — |
 
 **Estado atual:** base da Fase 0–1 em andamento — núcleo determinístico e
 offline com testes: scope, policy engine, state machine, e o **modelo de
@@ -242,15 +242,20 @@ Começou também a trilha de **egresso**: o *gate* determinístico
 modo passivo, re-resolução de DNS + bloqueio de IP, **pin do IP resolvido**
 (anti-rebinding) e rate-limit por host — mais os artefatos de deploy
 (`deploy/`: nftables + sandbox) como as outras duas barreiras de defesa em
-profundidade, pra aplicar na VPS. A camada de coleta/proxy escolhida é o
-**Caido** (com o plugin **JX Scout** para coletar/beautify/de-chunk do JS);
-o egress gate fica como **upstream do Caido**, mantendo o escopo-como-código
-em Python como fonte de verdade — ver `deploy/caido.md`. A **fronteira de
-ingestão** (`src/arbiter/ingest.py`) normaliza qualquer troca HTTP
-(`CapturedExchange`) em evidência `HTTP_EXCHANGE` content-addressed,
-independente da versão/API do Caido (o mapeamento específico do Caido é um
-adapter fino, escrito contra amostra real, por a API dele ser instável
-entre releases). Sem lógica de execução ativa.
+profundidade, pra aplicar na VPS. A camada de coleta/proxy é **plugável** (Caido + JX Scout é *uma* opção
+documentada em `deploy/caido.md`, com o egress gate como upstream; outras
+ferramentas servem igualmente). O que fixamos é a **fronteira de ingestão**,
+não a ferramenta — `src/arbiter/ingest.py` normaliza qualquer troca HTTP
+(`CapturedExchange`) em evidência `HTTP_EXCHANGE` content-addressed (o
+mapeamento específico de cada coletor é um adapter fino, escrito contra
+amostra real). Há também o **oráculo de protocolo**
+(`src/arbiter/oracles/protocol.py`): checa uma troca HTTP contra asserções
+de spec (CORS perigoso, flags de cookie), cada achado citando a cláusula.
+E, no lugar de "relatório", o **resumo de achado** (`src/arbiter/finding.py`)
+monta **factualmente** o que foi encontrado (classe, endpoint, constatação
+do oráculo, CVSS calculado, evidência, passos observados) para a **triagem
+humana** — **nenhuma IA redige o achado**; severidade é calculada, não
+opinada. Sem lógica de execução ativa.
 
 ## 12. Decisões abertas (não bloqueiam o desenho)
 
