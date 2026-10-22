@@ -236,8 +236,13 @@ ainda o **oráculo de invariante de negócio**
 observado, violações do tipo "regra de servidor imposta no cliente" —
 passo-obrigatório-precedente (payment bypass/step-skip), limites de valor
 (preço/qtd), uso-no-máximo-N (cupom) e estado-tem-que-mudar (crédito/quota).
-A *detecção* é offline; a *confirmação* continua ativa/Fase 5/gated. Sem
-lógica de execução ativa.
+A *detecção* é offline; a *confirmação* continua ativa/Fase 5/gated.
+Começou também a trilha de **egresso**: o *gate* determinístico
+(`src/arbiter/egress.py`) que o proxy chamará por requisição — método em
+modo passivo, re-resolução de DNS + bloqueio de IP, **pin do IP resolvido**
+(anti-rebinding) e rate-limit por host — mais os artefatos de deploy
+(`deploy/`: nftables + sandbox) como as outras duas barreiras de defesa em
+profundidade, pra aplicar na VPS. Sem lógica de execução ativa.
 
 ## 12. Decisões abertas (não bloqueiam o desenho)
 
