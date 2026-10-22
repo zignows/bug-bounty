@@ -217,7 +217,12 @@ asserções citáveis + reports distilados), tratada como **dado não
 confiável**, com gate de curadoria, dedup, proveniência/licença e
 retrieval que devolve conhecimento (não URL). A ingestão em massa do
 corpus `reddelexc/hackerone-reports` é passo posterior, *gated* na decisão
-de licença/dedup (ver `knowledge/README.md`). Sem lógica de execução ativa.
+de licença/dedup (ver `knowledge/README.md`). Há também o **esqueleto do
+control plane** (determinístico, sem LLM/rede): audit log append-only,
+budget governor com condições de parada, e o orquestrador que aplica
+decisões (validadas), impõe os limites de rodada, o gate humano de
+validação ativa e registra tudo — demonstrado em
+`examples/simulate_investigation.py`. Sem lógica de execução ativa.
 
 ## 12. Decisões abertas (não bloqueiam o desenho)
 
